@@ -27,4 +27,17 @@ class Lesson extends Model
     public function user() {
         return $this->belongsToMany('App\Models\User');
     }
+
+    /** Relacion uno a uno Polimorfica */
+    public function resource(){
+        return $this->morphOne('App\Models\Resource','resourceable');
+    }
+
+    public function commets(){
+        return $this->morphMany('App\Models\Commet','commentable');
+    }
+
+    public function reaction(){
+        return $this->morphMany('App\Models\Reaction','reactionable');
+    }
 }
