@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    
+    /** Bloquear el campo id 
+     * Si no protego el campo status, podrian crear el campo status y
+     * aprobarse el curso si que pase por un administrador 
+    */
+    protected $guarded = ['id', 'status']; 
+
+
     use HasFactory;
     const BORRADOR = 1;
     const REVISION = 2;

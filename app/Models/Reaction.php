@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reaction extends Model
 {
+    
+    /** Bloquear el campo id */
+    protected $guarded = ['id']; 
+    
     use HasFactory;
 
     const LIKE = 1;

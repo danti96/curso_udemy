@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Audience extends Model
 {
+    /** Bloquear el campo id */
+    protected $guarded = ['id']; 
+
     use HasFactory;
     
     /** Relacion uno a muchos inversa */

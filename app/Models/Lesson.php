@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
+    
+    /** Bloquear el campo id */
+    protected $guarded = ['id']; 
+    
     use HasFactory;
 
     /** Relacion uno a unoo */

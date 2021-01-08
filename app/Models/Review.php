@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
+    
+    /** Bloquear el campo id */
+    protected $guarded = ['id']; 
+    
     use HasFactory;
     /** Relacion uno a muchos Inversa*/
     public function reviews(){
