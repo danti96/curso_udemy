@@ -1,0 +1,96 @@
+Cambiar el comportamiento de inicio de sesion, por que me redirecciona a dashboard despues.
+1. app\Providers\RouteServiceProvider
+    modificar la constante "home"
+    antes:    
+        public const HOME = '/dashboard';
+    despues:
+        public const HOME = '/';
+
+generar un archivo en 'routes\admin.php' con la siguiente información
+    <?php
+
+    use Illuminate\Support\Facades\Route;
+
+Laravel no reconoce el archivo admin.php como un archivo de rutas, asi que en el archivo 'app\
+Providers\RouteServiceProvider' en la función Boot. Añadir la siguiente linea de codigo, despues
+de la ruta de web.
+        ....
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
+        
+        Route::middleware('web')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/admin.php'));
+        /**
+            * Para que nos muestre la información solo si el usuario esta autenticado
+            * se añade auth de esta manera Route::middleware('web','auth'), si no estoy 
+            * autenticado me redirecciona al login
+        */
+        ....
+        De esta manera laravel ya reconoce a admin.php como un archivo de ruta
+
+Seguido de esto colocamos la ruta de 'admin' en nuestro archivo 'routes\admin.php'
+        ....
+        Route::get('admin', function () {
+            return 'Hola administrador';
+        });
+        ....
+
+En nuestro navegador ya visualizare si entramos en la ruta 
+'curso.devcatpro.com/admin', nos retorna el mensaje:
+        
+        Hola administrador
+
+Ahora si queremos añadir un prefijo en nuestra ruta, lo configuramos en  en el archivo 'app\
+Providers\RouteServiceProvider'
+        ....
+        
+        Route::middleware('web','auth')
+        ->prefix('admin')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/admin.php'));
+        ....
+y modificamos la ruta de nuestro archivo admin.php 
+        ....
+        Route::get('', function () {
+            return 'Hola administrador';
+        });
+        ....
+
+En nuestro navegador ya visualizare si entramos en la ruta 
+'curso.devcatpro.com/admin', nos retorna el mensaje:
+        
+        Hola administrador
+
+en caso de que le añadamos una ruta seria 
+        ....
+        Route::get('admin_version_2', function () {
+            return 'Hola administrador';
+        });
+        ....
+En nuestro navegador ya visualizare si entramos en la ruta 
+'curso.devcatpro.com/admin/admin_version_2', nos retorna el mensaje:
+
+        Hola administrador
+
+
+2 Creacion de controladores por carpeta 
+    php artisan make:controller Admin/HomeController
+
+    creamos el metodo index, que nos muestra el archivo index en la carpeta admin en resources\views
+    
+    public function index(){
+        return view('admin.index');
+    }
+
+    en rutas, tenemos que llame al controlador HomeController
+    ....
+    use App\Http\Controllers\Admin\HomeController;
+    ....
+    Y agregamos la ruta al controlador con el metodo index
+    Route::get('', [HomeController::class, 'index']);
+    ....
+
+para instalar la plantilla adminlte, revisar 
+    https://github.com/jeroennoten/Laravel-AdminLTE/wiki/2.-Installation
