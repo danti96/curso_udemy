@@ -34,7 +34,7 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph(),
             'status' => $this->faker->randomElement([Course::BORRADOR, Course::REVISION, Course::PUBLICADO]),
             'slug' => Str::slug($title),
-            'user_id' => User::all()->random()->id, //Obtenemos un usuario aleatorio y que retorne el id
+            'user_id' =>  1,// Id 1 devcatpro //User::all()->random()->id, //Obtenemos un usuario aleatorio y que retorne el id
             'level_id'=> Level::all()->random()->id,
             'category_id'=>Category::all()->random()->id,
             'price_id'=> Price::all()->random()->id
