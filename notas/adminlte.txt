@@ -94,3 +94,32 @@ En nuestro navegador ya visualizare si entramos en la ruta
 
 para instalar la plantilla adminlte, revisar 
     https://github.com/jeroennoten/Laravel-AdminLTE/wiki/2.-Installation
+
+
+
+////
+Use de la plantilla jetstream
+
+
+hay que extender el componen en app\view\component\applayout.php
+llama al componente de jetstream
+<x-app-layout>
+
+
+</x-app-layout>
+
+error por autenticacion despues de cerrar sesion
+
+                    @auth
+                        
+                    @endauth
+                    en el archivo navigation encerrar todo y colocar 
+
+     <!-- Settings Dropdown -->
+                <div class="ml-3 relative">
+                    @auth
+                        <x-jet-dropdown
+                        
+                        </x-jet-dropdown
+                    @endauth
+
