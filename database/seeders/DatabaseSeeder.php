@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use Illuminate\Support\Facades\Storage; // Se utiliza para generar carpetas si no existe
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -13,6 +14,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        /**
+         * deleteDirectory, eliminar si existe la carpeta cursos 
+         * makeDirectory, indicar que carpeta quieres crear en public storage
+         * */
+        Storage::deleteDirectory('cursos');
+        Storage::makeDirectory('cursos');
+        $this->call(UserSeeder::class);
+
+        $this->call(LevelSeeder::class);
+
+        $this->call(CategorySeeder::class);
+
+        $this->call(PriceSeeder::class);
+        /**
+         * antes de crear curso, debe existir primero la tabla
+         * plataforma (platform)
+         */
+        $this->call(PlatformSeeder::class);
+        $this->call(CourseSeeder::class);
     }
 }

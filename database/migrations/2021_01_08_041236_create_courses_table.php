@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use App\Models\Courses;
+use App\Models\Course;
 
 class CreateCoursesTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreateCoursesTable extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->text('description');
-            $table->enum('status',[Courses::BORRADOR,Courses::REVISION,Courses::PUBLICADO])->default(1);
+            $table->enum('status',[Course::BORRADOR,Course::REVISION,Course::PUBLICADO])->default(1);
             $table->string('slug');
 
             $table->unsignedBigInteger('user_id');

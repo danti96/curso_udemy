@@ -26,8 +26,8 @@ class Course extends Model
         return $this->hasMany('App\Models\Review');
     }
     
-    public function requirements(){
-        return $this->hasMany('App\Models\Requirements');
+    public function requirement(){
+        return $this->hasMany('App\Models\Requirement');
     }
     
     public function goals(){
