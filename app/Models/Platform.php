@@ -14,7 +14,7 @@ class Platform extends Model
     use HasFactory;
 
     /** Relacion uno a muchos  */
-    public function lesson(){
+    public function lessons(){
         return $this->hasMany('App\Models\Lesson');
     }
 }

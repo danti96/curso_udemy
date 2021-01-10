@@ -67,7 +67,7 @@ class User extends Authenticatable
     /** Relación uno a muchos 
      * Cursos dictados
     */
-    public function courses_dictacted(){
+    public function courses_dictated(){
         return $this->hasMany('App\Models\Course');
     }
 
@@ -90,7 +90,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Course');
     }
 
-    public function lesson() {
+    public function lessons() {
         return $this->belongsToMany('App\Models\Lesson');
     }
 }

@@ -11,22 +11,42 @@ class Course extends Model
     /** Bloquear el campo id 
      * Si no protego el campo status, podrian crear el campo status y
      * aprobarse el curso si que pase por un administrador 
+     *
+     * Esto lo realiza eloquents, me da el numero de usuarios registrados
+     * en un curso, que es igual decir, $course->students->count()
+     * @$withCount = ['students'];
+     * 
+     * Si quieres saber más puedes ir a la documentación a Laravel en la sección de relaciones.
     */
     protected $guarded = ['id', 'status']; 
-
+    protected $withCount = ['students', 'reviews'];
 
     use HasFactory;
     const BORRADOR = 1;
     const REVISION = 2;
     const PUBLICADO = 3;
 
-    
+    /**
+     * Retorna la colección de review dejados por el usuarios
+     */
+    public function getRatingAttribute(){
+        if($this->reviews_count){
+            //reviews() devuelve el tipo de relación mas no la coleccion
+            //avg obtiene el promedio 
+            return round($this->reviews->avg('rating'), 1);
+        }else{
+            // Si no tiene calificaciones nos devuelve el valor de 5
+            return 5;
+        }
+    }    
+
+
     /** Relacion uno a muchos */
     public function reviews(){
         return $this->hasMany('App\Models\Review');
     }
     
-    public function requirement(){
+    public function requirements(){
         return $this->hasMany('App\Models\Requirement');
     }
     
@@ -34,11 +54,11 @@ class Course extends Model
         return $this->hasMany('App\Models\Goal');
     }
     
-    public function audience(){
+    public function audiences(){
         return $this->hasMany('App\Models\Audience');
     }
     
-    public function section(){
+    public function sections(){
         return $this->hasMany('App\Models\Section');
     }
     /** Relación uno a muchos Inversa 
@@ -71,11 +91,12 @@ class Course extends Model
     /** Relacion uno a uno Polimorfica */
 
     public function image(){
-        return $this->morphOne('App\Models\Image','imageable');
+        return $this->morphOne('App\Models\Image', 'imageable');
     }
     
     /** Relacion de curso con lesson */
+    //Relacion hasManyThrough
     public function lessons(){
-        return $this->hasManyThrough('App\Models\Lesson','App\Models\Lesson');
+        return $this->hasManyThrough('App\Models\Lesson', 'App\Models\Section');
     }
 }

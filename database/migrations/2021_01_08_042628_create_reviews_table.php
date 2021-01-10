@@ -17,7 +17,7 @@ class CreateReviewsTable extends Migration
             $table->id();
 
             $table->text('comments');
-            $table->integer('raiting');
+            $table->integer('rating');
 
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');

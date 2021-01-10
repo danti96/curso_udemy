@@ -15,7 +15,7 @@ class Lesson extends Model
 
     /** Relacion uno a unoo */
     public function description(){
-        return $this->hasOne('App\Models\Descriptions');
+        return $this->hasOne('App\Models\Description');
     }
 
     /** Relacion uno a muchos inversa */
@@ -28,7 +28,7 @@ class Lesson extends Model
     }
     
     /** Relacion muchos a muchos */
-    public function user() {
+    public function users() {
         return $this->belongsToMany('App\Models\User');
     }
 
@@ -37,11 +37,11 @@ class Lesson extends Model
         return $this->morphOne('App\Models\Resource','resourceable');
     }
 
-    public function commets(){
-        return $this->morphMany('App\Models\Commet','commentable');
+    public function comments(){
+        return $this->morphMany('App\Models\Comment','commentable');
     }
 
-    public function reaction(){
+    public function reactions(){
         return $this->morphMany('App\Models\Reaction','reactionable');
     }
 }
