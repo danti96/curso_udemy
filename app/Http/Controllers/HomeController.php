@@ -15,8 +15,8 @@ class HomeController extends Controller
     public function __invoke(){
         //return Course::find(4)->rating;
         // lastest es el sort o orderby desc
-        $course = Course::where('status',3)->latest('id')->get();
+        $coursers = Course::where('status',3)->latest('id')->get()->take(12);
 
-        return view('welcome', compact('course'));
+        return view('welcome', compact('coursers'));
     }
 }

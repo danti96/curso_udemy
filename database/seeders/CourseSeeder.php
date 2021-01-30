@@ -23,7 +23,7 @@ class CourseSeeder extends Seeder
     {
 
         /** llamos el factory courseFactory para crear cursos */
-        $courses = Course::factory(40)->create();
+        $courses = Course::factory(100)->create();
 
         foreach($courses as $course){
             /** LLamamos al modelo Image, LLamamos al metodo factory para que 

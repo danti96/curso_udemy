@@ -38,9 +38,25 @@ class Course extends Model
             // Si no tiene calificaciones nos devuelve el valor de 5
             return 5;
         }
-    }    
+    }
 
+    /**
+     * Query Scopes
+     */
+    public function scopeCategory($query, $category_id){
+        if($category_id){
+            return $query->where('category_id',$category_id);
+        }
+    }
 
+    public function scopeLevel($query, $level_id){
+        if($level_id){
+            return $query->where('level_id',$level_id);
+        }
+    }
+    public function getRouteKeyName(){
+        return "slug";
+    }
     /** Relacion uno a muchos */
     public function reviews(){
         return $this->hasMany('App\Models\Review');
@@ -71,15 +87,15 @@ class Course extends Model
     }
     
     public function level(){
-        return $this->hasMany('App\Models\Level');
+        return $this->belongsTo('App\Models\Level');
     }
     
     public function category(){
-        return $this->hasMany('App\Models\Category');
+        return $this->belongsTo('App\Models\Category');
     }
     
     public function price(){
-        return $this->hasMany('App\Models\Price');
+        return $this->belongsTo('App\Models\Price');
     }
     /** Relación uno a muchos 
      * los estudiantes que tenga este curso
