@@ -26,22 +26,47 @@ class CourseStatus extends Component
                 break;
             }
         }
+
+        /**
+         * Si actualmente la propiedad current no ha sido asignada
+         * se le asigna la ultima propiedad
+         **/
+
+        if(!$this->current){
+            $this->current = $course->lessons->last();
+        }
+
     }
     
     public function render()
     {
         return view('livewire.course-status');
     }
-    
+
     /**
-     * Actualizar el componente cuando se cambia de capitulo 
-     * ejecuta el metodo render, 
+     * Metodos
+     * Actualizar el componente cuando se cambia de capitulo, ejecuta el metodo render, 
      */
     public function changeLesson(Lesson $lesson){
         $this->current = $lesson;
     }
+    
+    public function completed(){
+        if ($this->current->completed) {
+            //Eliminar registro
+            $this->current->users()->detach(auth()->user()->id);
+        }else{
+            //Agregar registro
+            $this->current->users()->attach(auth()->user()->id);
+        }
+        $this->current = Lesson::find($this->current->id);
+
+        $this->course = Course::find($this->course->id);
+    }
+
 
     /**
+     *  Propiedades Computadas
      * recupera la propiedad course, y pide que recupere todas las lesson
      * pluck crea un conjunto de id
      */
@@ -65,5 +90,19 @@ class CourseStatus extends Component
         }else{
             return $this->course->lessons[$this->index + 1];
         }
+    }
+
+    public function getAdvanceProperty(){
+        //Porcentaje del curso
+        $i = 0;
+        foreach ($this->course->lessons as $lesson) {
+            if($lesson->completed){
+                $i++;
+            }
+        }
+
+        $advance = ($i * 100)/($this->course->lessons->count());
+        
+        return round($advance, 2);
     }
 }
