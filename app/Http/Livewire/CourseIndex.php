@@ -28,7 +28,7 @@ class CourseIndex extends Component
                     ->category($this->category_id)
                     ->level($this->level_id)
                     ->latest('id')
-                    ->paginate(2);
+                    ->paginate(4);
         
         return view('livewire.course-index', compact('courses','categories','levels'));
     }

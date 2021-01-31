@@ -6,8 +6,15 @@ use Livewire\Component;
 use App\Models\Course;
 use App\Models\Lesson;
 
+// Autoriza una acción determinada para el usuario actual.
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class CourseStatus extends Component
 {
+
+    use AuthorizesRequests;
+
+
     public $course, $current;
     /**
      * Cuando se carga la pagina por primera vez
@@ -36,6 +43,8 @@ class CourseStatus extends Component
             $this->current = $course->lessons->last();
         }
 
+        //metodo CoursePolicy objecto course
+        $this->Authorize('enrolled', $course);
     }
     
     public function render()
