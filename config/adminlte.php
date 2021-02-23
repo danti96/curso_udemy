@@ -243,6 +243,7 @@ return [
             'text'        => 'Lista de roles',
             'route'       => 'admin.roles.index',
             'icon'        => 'fas fa-fw fa-users-cog',
+            'active'      => ['admin/roles*']
         ],
         ['header' => 'account_settings'],
         [
