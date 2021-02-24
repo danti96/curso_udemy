@@ -10,6 +10,14 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+    //Para asignar los permisos a los diferentes metodos
+    public function __construct()
+    {
+        $this->middleware('can:Leer Usuario')->only('index');
+        $this->middleware('can:Editar Usuario')->only('edit','update');
+    }
+
     public function index()
     {
         return view('admin.users.index');

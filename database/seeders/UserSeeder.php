@@ -14,11 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Edhisson Daniel Alvarado Tintin',
-            'email'=> 'devcatpro@devcatpro.com',
-            'password'=> bcrypt('devcatpro'),
-        ]);
+        $user = User::create([
+                    'name' => 'Edhisson Daniel Alvarado Tintin',
+                    'email'=> 'devcatpro@devcatpro.com',
+                    'password'=> bcrypt('devcatpro'),
+                ]);
+        $user->assignRole('Admin');
         /** Llenar con registros de pruebas usando factories de user */
         User::factory(99)->create();
     }
