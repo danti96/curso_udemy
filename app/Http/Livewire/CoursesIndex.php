@@ -32,6 +32,7 @@ class CoursesIndex extends Component
 
         return view('livewire.courses-index', compact('courses', 'categories', 'levels'));
     }
+
     public function resetFilters()
     {
         $this->reset(['category_id', 'level_id']);
