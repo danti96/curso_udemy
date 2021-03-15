@@ -1,9 +1,10 @@
 <div class="container py-8">
     <!-- This example requires Tailwind CSS v2.0+ -->
     <x-table-responsive>
-        <div class="px-6 py-4">
-            <input wire:keydown="limpiarPage" wire:model="search" type="text" class="form-input w-full shadown-sm"
-                placeholder="Ingrese el nombre de un curso.">
+        <div class="px-6 py-4 flex">
+            <input wire:keydown="limpiarPage" wire:model="search" type="text"
+                class="form-input w-full shadown-sm flex-1" placeholder="Ingrese el nombre de un curso.">
+            <a class="btn btn-danger ml-2" href="{{ route('instructor.courses.create') }}">Crear nuevo curso</a>
         </div>
 
         @if ($courses->count())
