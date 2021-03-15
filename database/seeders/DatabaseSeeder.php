@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
          * deleteDirectory, eliminar si existe la carpeta cursos
          * makeDirectory, indicar que carpeta quieres crear en public storage
          * */
-        Storage::deleteDirectory('cursos');
-        Storage::makeDirectory('cursos');
+        Storage::deleteDirectory('courses');
+        Storage::makeDirectory('courses');
 
 
         $this->call(PermissionSeeder::class);
@@ -38,6 +38,5 @@ class DatabaseSeeder extends Seeder
          */
         $this->call(PlatformSeeder::class);
         $this->call(CourseSeeder::class);
-
     }
 }

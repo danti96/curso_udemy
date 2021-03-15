@@ -10,6 +10,8 @@ use App\Models\Course;
 use App\Models\Level;
 use App\Models\Price;
 
+use Illuminate\Support\Facades\Storage;
+
 class CourseController extends Controller
 {
     /**
@@ -45,7 +47,28 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'slug' => 'required|unique:courses',
+            'subtitle' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+            'level_id' => 'required',
+            'price_id' => 'required'
+        ]);
+
+        $course = Course::create($request->all());
+
+        if ($request->file('file')) {
+            $url = Storage::put('public/courses', $request->file('file'));
+        }
+        /*
+        * Accedemos a la relación image y con el metodo create,
+        * Creamos un nuevo registro en la tabla image y se relaciona con el nuevo curso
+        **/
+        $course->image()->create(['url' => $url]);
+
+        return redirect()->route('instructor.courses.edit', $course);
     }
 
     /**
@@ -83,7 +106,38 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+
+        $request->validate([
+            'title' => 'required',
+            'slug' => 'required|unique:courses,slug,' . $course->id,
+            'subtitle' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+            'level_id' => 'required',
+            'price_id' => 'required'
+        ]);
+
+        $course->update($request->all());
+
+        /* Si estamos enviando una imagen del formulario */
+        if ($request->file) {
+            $url = Storage::put('public/courses', $request->file('file'));
+
+            if ($course->image) {
+                /* Eliminar imagen si existe */
+                Storage::delete($course->image->url);
+                /* Actualizar imagen */
+                $course->image->update([
+                    'url' => $url
+                ]);
+            } else {
+                /* Si no tiene una imagen asociada, se accede a la relación image */
+                $course->image()->create([
+                    'url' => $url
+                ]);
+            }
+        }
+        return redirect()->route('instructor.courses.edit', $course);
     }
 
     /**

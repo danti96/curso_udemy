@@ -40,8 +40,15 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full"
-                                            src="{{ Storage::url($course->image->url) }}" alt="">
+                                        @isset($course->image)
+                                            {{-- Si existe una imagen relacionada --}}
+                                            <img class="h-10 w-10 rounded-full object-cover object-center"
+                                                src="{{ Storage::url($course->image->url) }}" alt="">
+                                        @else
+                                            <img class="h-10 w-10 rounded-full object-cover object-center"
+                                                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
+                                        @endisset
+
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">
