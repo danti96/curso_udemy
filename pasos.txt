@@ -1,0 +1,17 @@
+Permisos a las carpetas
+    chmod 755 -R bootstrap/
+    chmod 755 -R storage/
+    chown -R www-data:www-data storage/
+    chown -R www-data:www-data bootstrap/
+
+Ejecutar
+    composer install
+    npm install
+
+Crear la carpeta de acceso directo de storage en la carpeta public
+    php artisan storage:link
+    chown -R www-data:www-data storage/
+    chmod 755 -R storage/
+
+Crear la base de datos de prueba
+    php artisan migrate:fresh --seed

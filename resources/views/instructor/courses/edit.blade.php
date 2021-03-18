@@ -17,7 +17,7 @@
             <div class="card-body text-gray-600">
                 <h1 class="text-2xl font-bold">Información del curso</h1>
                 <hr class="mt-2 mb-2">
-                {!! Form::model($course, ['route' => ['instructor.courses.update', $course], 'method' => 'PUT', 'file' => true]) !!}
+                {!! Form::model($course, ['route' => ['instructor.courses.update', $course], 'method' => 'PUT', 'files' => true]) !!}
 
                 @include('instructor.courses.partials.form')
 
